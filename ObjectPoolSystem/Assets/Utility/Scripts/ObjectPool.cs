@@ -19,6 +19,7 @@ namespace Utility.ForObjectPool
         // Components
         // --------------------------------------------------
         private TKey        _targetObject = default;
+        private int         _objectIndex  = -1;
         private Queue<TKey> _pool         = default;
         private Transform   _parents      = null;
 
@@ -26,6 +27,11 @@ namespace Utility.ForObjectPool
         // Variables
         // --------------------------------------------------
         private int _capacity = 0;
+
+        // --------------------------------------------------
+        // Properties
+        // --------------------------------------------------
+        public TKey OriginObject => _targetObject;
 
         // --------------------------------------------------
         // Functions - Nomal
