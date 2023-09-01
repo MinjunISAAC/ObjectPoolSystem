@@ -52,17 +52,28 @@ namespace Utility.ForObjectPool
         // --------------------------------------------------
         // Variables
         // --------------------------------------------------
-        private Dictionary<Type, object> pools = new Dictionary<Type, object>();
+        private Dictionary<Type, object> _pools = new Dictionary<Type, object>();
 
-        public void CreatePool<TKey>(TKey obj, int capacity) where TKey : Component
+        public void CreatePool<TKey, TValue>(TValue obj, int capacity) where TKey : Enum where TValue : Component
         {
-            var pool = new ObjectPool<TKey>(capacity);
-            pools.Add(typeof(TKey), pool);
+            /*
+            Type keyType   = typeof(TKey);
+            Type valueType = typeof(TValue);
+            
+            if (!_pools.ContainsKey(keyType))
+            {
+                var pool = new ObjectPool<TValue>(capacity);
+                Debug.Log($"Pool Count 1 {_pools.Count} / {keyType} / {valueType.Name}");
+                _pools.Add(valueType, pool);
+            }
+
+            Debug.Log($"Pool Count 2 {_pools.Count} / {keyType} / {valueType.Name}");
+            */
         }
 
         public TKey GetObject<TKey>() where TKey : Component
         {
-            if (!pools.TryGetValue(typeof(TKey), out var pool))
+            if (!_pools.TryGetValue(typeof(TKey), out var pool))
             {
                 Debug.LogError($"<color = red>[ObjectPoolSystem.GetObject] 해당 Object가 담긴 Pool이 존재하지 않습니다.</color>");
                 return null;
@@ -81,7 +92,7 @@ namespace Utility.ForObjectPool
 
         public void ReturnObject<TKey>(TKey obj) where TKey : Component
         {
-            if (!pools.TryGetValue(typeof(TKey), out var pool))
+            if (!_pools.TryGetValue(typeof(TKey), out var pool))
             {
                 Debug.LogError($"<color = red>[ObjectPoolSystem.ReturnObject] 해당 Object가 담긴 Pool이 존재하지 않습니다.</color>");
                 return;

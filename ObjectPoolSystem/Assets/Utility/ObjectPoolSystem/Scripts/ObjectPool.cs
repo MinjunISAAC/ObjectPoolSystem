@@ -45,6 +45,8 @@ namespace Utility.ForObjectPool
             _targetObject = targetObject;
             _parents      = parents;
 
+            _pool = new Queue<TKey>();
+
             for (int i = 0; i < _capacity; i++) _pool.Enqueue(_CreatedObejct());
         }
 
