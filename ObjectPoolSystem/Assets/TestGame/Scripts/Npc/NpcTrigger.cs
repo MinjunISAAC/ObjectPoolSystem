@@ -1,18 +1,31 @@
+// ----- C#
 using System.Collections;
 using System.Collections.Generic;
+
+// ----- Unity
 using UnityEngine;
 
-public class NpcTrigger : MonoBehaviour
+namespace InGame.ForNpc
 {
-    // Start is called before the first frame update
-    void Start()
+    public class NpcTrigger : MonoBehaviour
     {
-        
-    }
+        // --------------------------------------------------
+        // Components
+        // --------------------------------------------------
+        [SerializeField] private ENpcType _npcType = ENpcType.Unknown;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // --------------------------------------------------
+        // Properties
+        // --------------------------------------------------
+        public ENpcType NpcType 
+        {
+            get
+            {
+                if (_npcType == ENpcType.Unknown)
+                    Debug.LogError($"[NpcTrigger.NpcType] Npc Type이 지정되지 않았습니다. Code : {nameof(_npcType)}");
+
+                return _npcType;
+            }
+        }
     }
 }
