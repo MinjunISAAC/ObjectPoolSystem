@@ -61,7 +61,7 @@ namespace InGame.ForUnit.Manage
             return _targetUnit;
         }
         
-        public void InitToNpcTriggerInteraction(Action<NpcTrigger> onNpcEncounter, Action<ENpcType, Vector3> onNpcStay, Action<NpcTrigger> onNpcBreakUp)
+        public void InitToNpcTriggerInteraction(Action<NpcTrigger> onNpcEncounter, Action<NpcTrigger> onNpcStay, Action<NpcTrigger> onNpcBreakUp)
         {
             // [TODO] 테스트 후 주석처리 되어야할 부분
             if (_targetUnit == null)
@@ -70,9 +70,9 @@ namespace InGame.ForUnit.Manage
                 return;
             }
 
-            _targetUnit.EventOnNpcTriggerEncounter += (npcTrigger)   => onNpcEncounter(npcTrigger);
-            _targetUnit.EventOnNpcTriggerStay      += (npcType, pos) => onNpcStay     (npcType, pos);
-            _targetUnit.EventOnNpcTriggerBreakUp   += (npcTrigger)   => onNpcBreakUp  (npcTrigger);
+            _targetUnit.EventOnNpcTriggerEncounter += (npcTrigger) => onNpcEncounter(npcTrigger);
+            _targetUnit.EventOnNpcTriggerStay      += (npcTrigger) => onNpcStay     (npcTrigger);
+            _targetUnit.EventOnNpcTriggerBreakUp   += (npcTrigger) => onNpcBreakUp  (npcTrigger);
         }
 
         public void SetJoyPad()

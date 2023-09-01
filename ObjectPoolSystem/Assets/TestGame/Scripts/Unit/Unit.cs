@@ -34,11 +34,11 @@ namespace InGame.ForUnit
                 EventOnNpcTriggerEncounter(npcTrigger);
         }
 
-        public event Action<ENpcType, Vector3> EventOnNpcTriggerStay = null;
-        public void OnNpcStay(ENpcType npcType, Vector3 pos)
+        public event Action<NpcTrigger> EventOnNpcTriggerStay = null;
+        public void OnNpcStay(NpcTrigger npcTrigger)
         {
             if (EventOnNpcTriggerStay != null)
-                EventOnNpcTriggerStay(npcType, pos);
+                EventOnNpcTriggerStay(npcTrigger);
         }
 
         public event Action<NpcTrigger> EventOnNpcTriggerBreakUp = null;
@@ -68,7 +68,7 @@ namespace InGame.ForUnit
                 return;
 
             if (other.TryGetComponent<NpcTrigger>(out NpcTrigger npcTrigger))
-                OnNpcStay(npcTrigger.NpcType, npcTrigger.transform.position);
+                OnNpcStay(npcTrigger);
             else // [TODO] Test 후 삭제 필요한 부분
                 Debug.LogError($"<color=red>[Unit.OnTriggerStay] Layer 설정이 잘못된 Npc가 존재합니다.</color>");
         }

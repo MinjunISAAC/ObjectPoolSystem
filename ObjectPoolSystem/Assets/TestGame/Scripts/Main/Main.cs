@@ -55,11 +55,18 @@ namespace InGame
                 npcTrigger.ChainTargetNpc(npc);
             };
             
-            Action<ENpcType, Vector3> onStayNpc  = (type, pos) => { Debug.Log($"Stay! {type} / {pos}");  };
-            Action<NpcTrigger>        onExitNpc  = 
+            Action<NpcTrigger> onStayNpc  = 
+            (npcTrigger) =>
+            {
+                if (npcTrigger.TargetNpc == null)
+                    npcTrigger.ChainTargetNpc(npcTrigger.TargetNpc);
+            };
+
+            Action<NpcTrigger> onExitNpc  = 
             (npcTrigger) => 
             {
                 _npcController.InactiveToNpc(npcTrigger);
+                npcTrigger.ChainTargetNpc(npcTrigger.TargetNpc, true);
             };
 
             //[µî·Ï]

@@ -52,7 +52,7 @@ namespace InGame.ForNpc
         // --------------------------------------------------
         public void ChainTargetNpc(Npc npc, bool unChain = false)
         {
-            if (unChain == true)
+            if (unChain)
                 return;
 
             if (_targetNpc == null)
