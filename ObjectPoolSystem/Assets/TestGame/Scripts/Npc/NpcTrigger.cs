@@ -10,9 +10,21 @@ namespace InGame.ForNpc
     public class NpcTrigger : MonoBehaviour
     {
         // --------------------------------------------------
+        // Npc Trigger State Enum
+        // --------------------------------------------------
+        public enum ETriggerState
+        {
+            Unknown = 0,
+            Show    = 1,
+            Hide    = 2,
+            Clear   = 3,
+        }
+
+        // --------------------------------------------------
         // Components
         // --------------------------------------------------
-        [SerializeField] private ENpcType _npcType = ENpcType.Unknown;
+        [SerializeField] private ENpcType      _npcType      = ENpcType.Unknown;
+        [SerializeField] private ETriggerState _triggerState = ETriggerState.Hide;
 
         // --------------------------------------------------
         // Properties

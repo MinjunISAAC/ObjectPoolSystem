@@ -12,6 +12,15 @@ namespace InGame.ForNpc.Manage
         // --------------------------------------------------
         // Components
         // --------------------------------------------------
+        [SerializeField] private List<Npc> _testNpc = null;
+
+        // --------------------------------------------------
+        // Functions - Nomal
+        // --------------------------------------------------
+        private void CreatedToNpc() 
+        { 
+            
+        }
 
     }
 }
