@@ -15,34 +15,68 @@ namespace InGame.ForNpc.Manage
         // --------------------------------------------------
         // Components
         // --------------------------------------------------
-        [SerializeField] private List<Npc>                             _testNpc = null;
-        [SerializeField] private Dictionary<ENpcType, ObjectPool<Npc>> _pools   = null;
+        [SerializeField] private List<Npc> _testNpcGroup = null;
+        [SerializeField] private Transform _npcParents   = null;
+
+        // --------------------------------------------------
+        // Variables
+        // --------------------------------------------------
+        private Dictionary<ENpcType, ObjectPool<Npc>> _pools   = null;
 
         // --------------------------------------------------
         // Functions - Event
         // --------------------------------------------------
-        private void Start()
-        {
-            CreatedToNpc();
-        }
+        //private void Awake()
+        //{
+        //    CreatedToNpc();
+        //}
 
         // --------------------------------------------------
         // Functions - Nomal
         // --------------------------------------------------
-        private void CreatedToNpc() 
+        // ----- Public
+        public Npc ActiveToNpc(ENpcType npcType, Vector3 pos)
+        {
+            if (!_pools.TryGetValue(npcType, out ObjectPool<Npc> pool))
+            {
+                Debug.LogError($"<color=red>[NpcController.ActiveToNpc] {npcType}의 Object Pool이 존재하지 않습니다.</color>");
+                return null;
+            }
+
+            var npc = pool.GetObject(_npcParents.transform);
+            npc.transform.position = pos;
+
+            return npc;
+        }
+
+        public void InactiveToNpc(NpcTrigger npcTrigger)
+        {
+            var npcType = npcTrigger.NpcType;
+
+            if (!_pools.TryGetValue(npcType, out ObjectPool<Npc> pool))
+            {
+                Debug.LogError($"<color=red>[NpcController.InactiveToNpc] {nameof(npcType)}의 Object Pool이 존재하지 않습니다.</color>");
+                return;
+            }
+
+            pool.ReturnObject(npcTrigger.TargetNpc);
+        }
+
+        public void CreatedToNpc() 
         {
             _pools = new Dictionary<ENpcType, ObjectPool<Npc>>();
-            for (int i = 0; i < _testNpc.Count; i++)
+
+            for (int i = 0; i < _testNpcGroup.Count; i++)
             {
-                var npc     = _testNpc[i];
+                var npc     = _testNpcGroup[i];
                 var npcPool = new ObjectPool<Npc>(10);
+
                 npcPool.OnInit(npc, null);
 
                 _pools.Add(npc.NpcType, npcPool);
-
-                //ObjectPoolSystem.Instance.CreatePool<ENpcType, Npc>(npc, 10);
             }
         }
 
+        // ----- Private
     }
 }

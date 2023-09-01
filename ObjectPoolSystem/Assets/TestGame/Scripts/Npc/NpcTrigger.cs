@@ -27,6 +27,11 @@ namespace InGame.ForNpc
         [SerializeField] private ETriggerState _triggerState = ETriggerState.Hide;
 
         // --------------------------------------------------
+        // Varialbes
+        // --------------------------------------------------
+        private Npc _targetNpc = null;
+
+        // --------------------------------------------------
         // Properties
         // --------------------------------------------------
         public ENpcType NpcType 
@@ -38,6 +43,20 @@ namespace InGame.ForNpc
 
                 return _npcType;
             }
+        }
+
+        public Npc TargetNpc => _targetNpc;
+
+        // --------------------------------------------------
+        // Functions - Nomal
+        // --------------------------------------------------
+        public void ChainTargetNpc(Npc npc, bool unChain = false)
+        {
+            if (unChain == true)
+                return;
+
+            if (_targetNpc == null)
+                _targetNpc = npc;
         }
     }
 }

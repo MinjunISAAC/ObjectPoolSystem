@@ -17,6 +17,11 @@ namespace InGame.ForNpc
         [SerializeField] private ENpcType _npcType = ENpcType.Unknown;
 
         // --------------------------------------------------
+        // Variables
+        // --------------------------------------------------
+        private bool _isActive = false;
+
+        // --------------------------------------------------
         // Properties
         // --------------------------------------------------
         public ENpcType NpcType 
@@ -29,5 +34,10 @@ namespace InGame.ForNpc
                 return _npcType;
             }
         }
+
+        // --------------------------------------------------
+        // Functions - Nomal
+        // --------------------------------------------------
+
     }
 }

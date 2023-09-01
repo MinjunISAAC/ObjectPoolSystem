@@ -1,4 +1,5 @@
 // ----- C#
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -7,6 +8,7 @@ using UnityEngine;
 
 // ----- User Defined
 using InGame.ForUnit.Manage.ForUI;
+using InGame.ForNpc;
 
 namespace InGame.ForUnit.Manage
 {
@@ -40,11 +42,12 @@ namespace InGame.ForUnit.Manage
         // --------------------------------------------------
         // Functions - Nomal
         // --------------------------------------------------
+        // ----- Public
         public Unit CreateTargetUnit(Unit targetUnit, Transform spawnTrans = null)
         {
             if (_targetUnit != null)
             {
-                Debug.LogError($"<color = red>[UnitController - CreateTargetUnit] 이미 PlayableUnit이 존재합니다.</color>");
+                Debug.LogError($"<color = red>[UnitController.CreateTargetUnit] 이미 PlayableUnit이 존재합니다.</color>");
                 return null;
             }
 
@@ -56,6 +59,20 @@ namespace InGame.ForUnit.Manage
             SetJoyPad();
 
             return _targetUnit;
+        }
+        
+        public void InitToNpcTriggerInteraction(Action<NpcTrigger> onNpcEncounter, Action<ENpcType, Vector3> onNpcStay, Action<NpcTrigger> onNpcBreakUp)
+        {
+            // [TODO] 테스트 후 주석처리 되어야할 부분
+            if (_targetUnit == null)
+            {
+                Debug.LogError($"<color=red>[UnitController.InitiateNpcInteraction] Target Unit이 지정되지 않았습니다.</color>");
+                return;
+            }
+
+            _targetUnit.EventOnNpcTriggerEncounter += (npcTrigger)   => onNpcEncounter(npcTrigger);
+            _targetUnit.EventOnNpcTriggerStay      += (npcType, pos) => onNpcStay     (npcType, pos);
+            _targetUnit.EventOnNpcTriggerBreakUp   += (npcTrigger)   => onNpcBreakUp  (npcTrigger);
         }
 
         public void SetJoyPad()

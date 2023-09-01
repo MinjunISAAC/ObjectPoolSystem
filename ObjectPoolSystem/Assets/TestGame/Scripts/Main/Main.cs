@@ -1,4 +1,5 @@
 // ----- C#
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -9,6 +10,8 @@ using UnityEngine;
 using InGame.ForUnit.Manage;
 using InGame.ForUnit;
 using InGame.ForCam;
+using InGame.ForNpc.Manage;
+using InGame.ForNpc;
 
 namespace InGame
 {
@@ -19,7 +22,8 @@ namespace InGame
         // --------------------------------------------------
         [Header("Manage")]
         [SerializeField] private UnitController _unitController = null;
-        [SerializeField] private CamController  _camController  = null;  
+        [SerializeField] private CamController  _camController  = null;
+        [SerializeField] private NpcController  _npcController  = null;
 
         [Space][Header("Unit")]
         [SerializeField] private Unit           _unitOrigin     = null;
@@ -40,6 +44,26 @@ namespace InGame
             // Camera 초기화
             _camController.OnInit(_targetUnit);
             _camController.ChangeToCamState(CamController.ECamState.Follow_Unit);
+
+            // Unit & Npc 상호작용 초기화
+            _npcController.CreatedToNpc();
+
+            Action<NpcTrigger> onEnterNpc = 
+            (npcTrigger) => 
+            {
+                var npc = _npcController.ActiveToNpc(npcTrigger.NpcType, npcTrigger.transform.position);
+                npcTrigger.ChainTargetNpc(npc);
+            };
+            
+            Action<ENpcType, Vector3> onStayNpc  = (type, pos) => { Debug.Log($"Stay! {type} / {pos}");  };
+            Action<NpcTrigger>        onExitNpc  = 
+            (npcTrigger) => 
+            {
+                _npcController.InactiveToNpc(npcTrigger);
+            };
+
+            //[등록]
+            _unitController.InitToNpcTriggerInteraction(onEnterNpc, onStayNpc, onExitNpc);
 
             yield return null;
         }
