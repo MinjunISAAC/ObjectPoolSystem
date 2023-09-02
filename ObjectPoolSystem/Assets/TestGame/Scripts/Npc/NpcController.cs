@@ -71,7 +71,7 @@ namespace InGame.ForNpc.Manage
                 var npc     = _testNpcGroup[i];
                 var npcPool = new ObjectPool<Npc>(30);
 
-                npcPool.OnInit(npc, null);
+                npcPool.OnInit(npc, _npcParents.transform);
 
                 _pools.Add(npc.NpcType, npcPool);
             }

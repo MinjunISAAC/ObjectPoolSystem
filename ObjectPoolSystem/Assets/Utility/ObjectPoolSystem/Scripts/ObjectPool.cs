@@ -19,7 +19,6 @@ namespace Utility.ForObjectPool
         // Components
         // --------------------------------------------------
         private TKey        _targetObject = default;
-        private int         _objectIndex  = -1;
         private Queue<TKey> _pool         = default;
         private Transform   _parents      = null;
 

@@ -51,8 +51,11 @@ namespace InGame
             Action<NpcTrigger> onEnterNpc = 
             (npcTrigger) => 
             {
-                var npc = _npcController.ActiveToNpc(npcTrigger.NpcType, npcTrigger.transform.position);
-                npcTrigger.ChainTargetNpc(npc);
+                if (npcTrigger.TargetNpc == null)
+                {
+                    var npc = _npcController.ActiveToNpc(npcTrigger.NpcType, npcTrigger.transform.position);
+                    npcTrigger.ChainTargetNpc(npc);
+                }
             };
             
             Action<NpcTrigger> onStayNpc  = 
@@ -65,8 +68,11 @@ namespace InGame
             Action<NpcTrigger> onExitNpc  = 
             (npcTrigger) => 
             {
+                if (npcTrigger.TargetNpc == null)
+                    return;
+
                 _npcController.InactiveToNpc(npcTrigger);
-                npcTrigger.ChainTargetNpc(npcTrigger.TargetNpc, true);
+                npcTrigger.ChainTargetNpc(null);
             };
 
             //[µî·Ï]

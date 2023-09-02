@@ -29,7 +29,7 @@ namespace InGame.ForNpc
         // --------------------------------------------------
         // Varialbes
         // --------------------------------------------------
-        private Npc _targetNpc = null;
+        [SerializeField] private Npc _targetNpc = null;
 
         // --------------------------------------------------
         // Properties
@@ -50,13 +50,12 @@ namespace InGame.ForNpc
         // --------------------------------------------------
         // Functions - Nomal
         // --------------------------------------------------
-        public void ChainTargetNpc(Npc npc, bool unChain = false)
+        public void ChainTargetNpc(Npc npc)
         {
-            if (unChain)
-                return;
-
             if (_targetNpc == null)
                 _targetNpc = npc;
+            else
+                _targetNpc = null;
         }
     }
 }
