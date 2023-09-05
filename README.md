@@ -7,7 +7,7 @@
 ### 1. 데모 이미지
 
 <p align="center">
-    <img src="./ObjectPoolSystem/ImageGroup/DEMO.gif" alt="DEMO" width="600">
+    <img src="./ObjectPoolSystem/ImageGroup/DemoGif.gif" alt="DEMO" width="600">
 </p>
 
 ### 2. 조건
